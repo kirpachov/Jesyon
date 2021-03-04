@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyText
+  body: MyText
+  ispriv: false
+  date: 2021-03-04
+  time: 1.5
+
+two:
+  title: MyText
+  body: MyText
+  ispriv: false
+  date: 2021-03-04
+  time: 1.5
