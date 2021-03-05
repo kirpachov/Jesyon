@@ -1,41 +1,87 @@
-<p id="notice"><%= notice %></p>
+<p id="notice">
+  <%= notice %>
+</p>
 
 <h1>Activities</h1>
 
-<table>
+<%= link_to 'New Activity' , new_activity_path %>
+<div class="row">
+  <div class="col">
+    <h4>Filter activity by:{<%=@filters%>}</h4>
+  </div>
+  <form action="/activities" onsubmit=" applyFilters();">
+    <input type="text" id="filterActivitiesInput" , oninput="updateFilter(this)" id="filter" name="filter">
+    <input type="submit" id="filterActivitiesButton" , onclick="console.log(this)">
+  </form>
+  <script>
+    let link = "/activities?filter="
+    let filter = "";
+    function updateFilter(input) {
+      filter = input.value
+      console.log(filter);
+    }
+
+    function applyFilters() {
+      //return false;
+      window.open(link + filter, "_self")
+    }
+  </script>
+</div>
+<table class="table table-dark">
   <thead>
     <tr>
-      <th>#</th>
-      <th>#User</th>
-      <th>#Category</th>
-      <th>Title</th>
-      <th>Body</th>
-      <th>Ispriv</th>
-      <th>Date</th>
-      <th>Time</th>
-      <th colspan="3"></th>
+      <th scope="col">#</th>
+      <th scope="col">#User</th>
+      <th scope="col">#Category</th>
+      <th scope="col">Title</th>
+      <th scope="col">Body</th>
+      <th scope="col">Ispriv</th>
+      <th scope="col">Date</th>
+      <th scope="col">Time</th>
+      <th  scope="col"></th>
     </tr>
   </thead>
 
   <tbody>
     <% @activities.each do |activity| %>
       <tr>
-        <td><%= activity.id %></td>
-        <td><%= activity.user.name %></td>
-        <td><%= activity.category.body %></td>
-        <td><%= activity.title %></td>
-        <td><%= activity.body %></td>
-        <td><%= activity.ispriv %></td>
-        <td><%= activity.date %></td>
-        <td><%= activity.time %></td>
-        <td><%= link_to 'Show', activity %></td>
-        <td><%= link_to 'Edit', edit_activity_path(activity) %></td>
-        <td><%= link_to 'Destroy', activity, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th scope="row">
+          <%= activity.id %>
+        </th>
+        <td>
+          <%= activity.user.name %>
+        </td>
+        <td>
+          <%= activity.category.body %>
+        </td>
+        <td>
+          <%= activity.title %>
+        </td>
+        <td>
+          <%= activity.body %>
+        </td>
+        <td>
+          <%= activity.ispriv %>
+        </td>
+        <td>
+          <%= activity.date %>
+        </td>
+        <td>
+          <%= activity.time %>
+        </td>
+        <td>
+          <%= link_to 'Show' , activity %>
+        </td>
+        <td>
+          <%= link_to 'Edit' , edit_activity_path(activity) %>
+        </td>
+        <td>
+          <%= link_to 'Destroy' , activity, method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
       </tr>
-    <% end %>
+      <% end %>
   </tbody>
 </table>
 
 <br>
-
-<%= link_to 'New Activity', new_activity_path %>
+<%=@json%>

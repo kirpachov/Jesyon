@@ -3,7 +3,14 @@ class ActivitiesController < ApplicationController
 
   # GET /activities or /activities.json
   def index
-    @activities = Activity.all
+    filter_applied = params[:filter]
+    if(filter_applied == nil)
+      @activities = Activity.all
+    else
+      @filter = filter_applied
+      @activities = Activity.all.where('title ilike ?', "#{filter_applied}%")
+      #@json = Activity.all.where('title ilike ?', "#{filter_applied}%").to_json
+    end
   end
 
   # GET /activities/1 or /activities/1.json
