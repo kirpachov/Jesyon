@@ -4,7 +4,7 @@
 <%= render "devise/shared/error_messages", resource: resource %>
 <form>
   <div class="row">
-    <div class="col col-6">
+    <div class="col col-12 col-md-6">
       <div class="form-group">
         <%= f.label :name %>
         <%= f.text_field :name, autofocus: true, autocomplete: "name", class:"form-control" %>
@@ -47,7 +47,7 @@
         <%= f.submit "Update", class:"btn btn-primary"%>
       </div>
     </div>
-    <div class="col col-6"><%= current_user.inspect%></div>
+    <div class="col col-6"><%#= current_user.inspect%></div>
   </div>
 </form>
 <% end %>
