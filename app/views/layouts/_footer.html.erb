@@ -29,6 +29,12 @@
     img.setAttribute("src","/assets/new.svg");
     img.setAttribute("class","ml-3");
     text.appendChild(img);
+  }else
+  if(page == "activities.edit"){
+    text.innerText = "Salva";
+    img.setAttribute("src","/assets/save.svg");
+    img.setAttribute("class","ml-3");
+    text.appendChild(img);
   }
 
   if(text.textContent.replaceAll(" ","") == ""){
@@ -43,7 +49,8 @@
     if (page == "activities.new"){
         document.getElementById("submitNewActivity").click();
     }else
-     if (page == "activities.index"){window.open("<%=new_activity_path %>", "_self")}
+     if (page == "activities.index"){window.open("<%=new_activity_path %>", "_self")}else
+     if (page == "activities.edit"){document.getElementById("submitNewActivity").click();}
   })
 
   })();
