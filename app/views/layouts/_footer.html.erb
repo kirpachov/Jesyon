@@ -1,0 +1,50 @@
+      
+<div id="footer" class="<%=controller_name+"."+action_name%> footer text-center py-3">
+  <div class="container">
+    <div class="row">
+      <div class="col col-12">
+          <h1 id="footerMsg"><img src="/assets/send.svg"></h1>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+(function() {
+  text = document.getElementById("footerMsg");
+  newActivity = document.getElementById("submitNewActivity");
+  fot = document.getElementById("footer");
+  let img = document.createElement("IMG");
+  let page = fot.classList[0];
+  console.log("You're in page "+page);
+  if(page == "activities.new"){
+    text.innerText = "Salva e invia      ";
+    img.setAttribute("src","/assets/save.svg");
+     img.setAttribute("class","ml-3");
+    text.appendChild(img);
+  } else
+   if(page == "activities.index"){
+    text.innerText = "Crea";
+    img.setAttribute("src","/assets/new.svg");
+    img.setAttribute("class","ml-3");
+    text.appendChild(img);
+  }
+
+  if(text.textContent.replaceAll(" ","") == ""){
+    console.error("No msg");
+    fot.classList.add("d-none");
+  }else{
+    console.log("Msg: "+text.textContent);
+
+  }
+
+  fot.addEventListener("click",function () {
+    if (page == "activities.new"){
+        document.getElementById("submitNewActivity").click();
+    }else
+     if (page == "activities.index"){window.open("<%=new_activity_path %>", "_self")}
+  })
+
+  })();
+</script>

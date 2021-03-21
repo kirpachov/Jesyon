@@ -2,10 +2,11 @@
   <%= notice %>
 </p>
 
-<h1>Activities</h1>
+<h1><%=@cus%></h1>
+<h1 class="text-center">Attività</h1>
 
-<%= link_to 'New Activity' , new_activity_path %>
-<div class="row">
+
+<div class="row d-none">
   <div class="col">
     <h4>Filter activity by:{<%=@filters%>}</h4>
   </div>
@@ -16,6 +17,7 @@
   <script>
     let link = "/activities?filter="
     let filter = "";
+
     function updateFilter(input) {
       filter = input.value
       console.log(filter);
@@ -27,61 +29,46 @@
     }
   </script>
 </div>
-<table class="table table-dark">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">#User</th>
-      <th scope="col">#Category</th>
-      <th scope="col">Title</th>
-      <th scope="col">Body</th>
-      <th scope="col">Ispriv</th>
-      <th scope="col">Date</th>
-      <th scope="col">Time</th>
-      <th  scope="col"></th>
-    </tr>
-  </thead>
 
-  <tbody>
-    <% @activities.each do |activity| %>
-      <tr>
-        <th scope="row">
-          <%= activity.id %>
-        </th>
-        <td>
-          <%= activity.user.name %>
-        </td>
-        <td>
-          <%= activity.category.body %>
-        </td>
-        <td>
-          <%= activity.title %>
-        </td>
-        <td>
-          <%= activity.body %>
-        </td>
-        <td>
-          <%= activity.ispriv %>
-        </td>
-        <td>
-          <%= activity.date %>
-        </td>
-        <td>
-          <%= activity.time %>
-        </td>
-        <td>
-          <%= link_to 'Show' , activity %>
-        </td>
-        <td>
-          <%= link_to 'Edit' , edit_activity_path(activity) %>
-        </td>
-        <td>
-          <%= link_to 'Destroy' , activity, method: :delete, data: { confirm: 'Are you sure?' } %>
-        </td>
-      </tr>
+<% @activities.each do |activity| %>
+<%#=activity.inspect%>
+<%# if user_signed_in? && !activity.ispriv || user_signed_in? && activity.user.id == current_user.id %>
+<div class="activity p-4 my-3" style="background-color:#3282B8; border-radius:30px;" onclick="window.open('<%=edit_activity_path(activity)%>','_self')">
+  <div class="row">
+    <div class="col col-md-10">
+      <div class="row">
+        <div class="col col-12">
+          <span>
+            <!--<i class="bi bi-lock padlock"></i>-->
+            <% if activity.ispriv %>
+            <img src="/assets/lock.svg" class="padlock">
+            <% else %>
+            <img src="/assets/unlock.svg" class="padlock">
+            <% end %>
+            <span class="h4">
+              <%= activity.title %>
+            </span>
+          </span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col col-12"><%= activity.body%></div>
+      </div>
+      <div class="row">
+        <div class="col col-12"> <% if  activity.time? %><%= activity.time %>min, il<% end %>
+          <%= activity.created_at.to_s.split(" UTC")[0] %>
+        </div>
+      </div>
+    </div>
+    <div class="col col-md-2">
+      <% if activity.user.image.attached? %><%= image_tag(activity.user.image, class:"image-tag-activity") %><% end %>
+      <%= activity.user.name.split(" ")[0] %>
+      <% if user_signed_in? && activity.user.id == current_user.id %>
+      <img src="/assets/pen" class="d-none d-sm-inline">
       <% end %>
-  </tbody>
-</table>
-
-<br>
+      <br><%= activity.hashtag %> <%#= activity.category.body %></div>
+  </div>
+</div>
+<%# end %>
+<% end %>
 <%=@json%>

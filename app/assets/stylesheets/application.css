@@ -1,15 +1,103 @@
-/*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
- * vendor/assets/stylesheets directory can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the bottom of the
- * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
- * files in this directory. Styles in this file should be added after the last require_* statement.
- * It is generally better to create a new file per style scope.
- *
- *= require_tree .
- *= require_self
- */
+.footer {
+  position: fixed;
+  left: 25%;
+  bottom: 0;
+  width: 50%;
+  background-color: #3282b8;
+  color: white;
+  border-radius: 30px 30px 0 0 ;
+  border: 1px solid #bbe1fa;
+}
+.footer:hover{
+  cursor: pointer;
+}
+.avatar-navbar{
+  width: 60px;
+  height: 60px;
+  transition: .8s;
+}
+input, textarea{
+  background-color: #bbe1fa !important;
+}
+body{
+  color:#bbe1fa !important;
+}
+.form-activity{
+background-color:#3282b8;
+border-radius: 30px;
+}
+.avatar-navbar:hover{
+  width: 65px;
+  height: 65px;
+}
+nav, .sidebar{
+  background-color: #1b262c !important;
+}
+.image-tag-activity{
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+}
+
+.padlock{
+  width: 60px;
+  height: 35px;
+}
+
+body {
+  text-decoration: #FFF;
+  background-color: #0f4c75 !important;
+  font-family: "Lato", sans-serif;
+}
+
+.sidebar {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidebar a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidebar a:hover {
+  color: lightblue;
+}
+
+.sidebar .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+.openbtn {
+  font-size: 20px;
+  cursor: pointer;
+  background-color: #111;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+}
+
+.openbtn:hover {
+  background-color: #444;
+}
+
+#main {
+  transition: margin-left .5s;
+  padding: 16px;
+}

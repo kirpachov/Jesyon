@@ -1,53 +1,108 @@
 <%= form_with(model: activity) do |form| %>
-  <% if activity.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(activity.errors.count, "error") %> prohibited this activity from being saved:</h2>
+<% if activity.errors.any? %>
+<div id="error_explanation">
+  <h2><%= pluralize(activity.errors.count, "error") %> prohibited this activity from being saved:</h2>
 
-      <ul>
-        <% activity.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-  
-  
-  <div class="field">
-    <%= form.label :category_id %>
-    <%= form.text_area :category_id %>
-  </div>
-
-  <div class="field">
-    <%= form.label :user_id %>
-    <%= form.text_area :user_id %>
-  </div>
-
-  <div class="field">
-    <%= form.label :title %>
-    <%= form.text_area :title %>
-  </div>
-
-  <div class="field">
-    <%= form.label :body %>
-    <%= form.text_area :body %>
-  </div>
-
-  <div class="field">
-    <%= form.label :ispriv %>
-    <%= form.check_box :ispriv %>
-  </div>
-
-  <div class="field">
-    <%= form.label :date %>
-    <%= form.date_select :date %>
-  </div>
-
-  <div class="field">
-    <%= form.label :time %>
-    <%= form.text_field :time %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+  <ul>
+    <% activity.errors.each do |error| %>
+    <li><%= error.full_message %></li>
+    <% end %>
+  </ul>
+</div>
 <% end %>
+<div class="row form-activity p-3">
+  <div class="col col-12">
+
+
+    <div class="form-group">
+      <%= form.label :"Titolo attività" %>
+      <%= form.text_field :title, class:"form-control", placeholder:"Breve titolo esplicativo" %>
+    </div>
+
+
+    <div class="form-group">
+      <%= form.label :"Descrizione Attività" %>
+      <%= form.text_area :body, class:"form-control", style:"min-height:100px", placeholder:"Racconta cosa hai fatto" %>
+    </div>
+
+
+    <div class="form-group">
+      <%= form.label :Immagine %>
+      <%= form.file_field :image, multiple:false, class:"form-control" %>
+    </div>
+
+    <div class="row">
+      <div class="col col-4">
+        <div class="form-group">
+          <span>Categoria</span>
+
+          <%= form.text_field :hashtag, class:"form-control", placeholder:"#argomento" %>
+          <%= form.text_field :category_id, class:"d-none form-control", placeholder:"Come vorresti raggrupparla?", value:"1" %>
+        </div>
+      </div>
+
+      <div class="col col-6 offset-2">
+        <div class="row">
+          <div class="col col-6">
+            <div class="form-group">
+              <span>Ore</span>
+              <input type="number" class="form-control" placeholder="Ore" id="hours" value="0" max="1000" min="0">
+            </div>
+          </div>
+
+          <div class="col col-6">
+            <div class="form-group">
+              <span>Minuti</span>
+              <input type="number" class="form-control" placeholder="Minuti" id="minutes" value="0" max="6000" min="0">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col col-4">
+        <%= Time.new.strftime("%d/%m/%Y")%>
+      </div>
+      <div class="col col-2 offset-6">
+        <div class="custom-control custom-switch">
+        <%= form.check_box :ispriv, class:"custom-control-input",id:"customSwitch1" %>
+          <label class="custom-control-label" for="customSwitch1">Attività privata</label>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="d-none">
+      <%= form.text_field :time, class:"form-control", id:"theRealOne" %>
+      <%= form.text_area :user_id, value:current_user.id, class:"form-control" %>
+      <%= form.date_select :date %>
+    </div>
+
+    <div class="actions ">
+      <%= form.submit class:"btn d-none" , id:"submitNewActivity" %>
+    </div>
+  </div>
+</div>
+<% end %>
+
+
+
+
+<script>
+  let h = document.getElementById("hours");
+  let m = document.getElementById("minutes");
+  let tr = document.getElementById("theRealOne");
+
+  function updateValue(h, m) {
+    tr.value = parseInt(h * 60) + parseInt(m);
+  }
+
+  h.oninput = function() {
+    updateValue(h.value, m.value)
+    console.log(h.value + "h, " + m.value + "min")
+  }
+  m.oninput = function() {
+    updateValue(h.value, m.value)
+    console.log(h.value + "h, " + m.value + "min")
+  }
+</script>

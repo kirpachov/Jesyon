@@ -1,11 +1,15 @@
 class ActivitiesController < ApplicationController
   before_action :set_activity, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!, except: [:index, :show]
+  before_action :correct_user, only: [:edit, :update, :destroy]
 
   # GET /activities or /activities.json
   def index
+    user_id = user_signed_in? ? current_user.id : -1
+    @activities = Activity.all.with_attached_image.where("user_id = ? OR ispriv = ?","#{user_id}", "false")
     filter_applied = params[:filter]
     if(filter_applied == nil)
-      @activities = Activity.all
+      @activities = @activities
     else
       @filter = filter_applied
       @activities = Activity.all.where('title ilike ?', "#{filter_applied}%")
@@ -32,7 +36,7 @@ class ActivitiesController < ApplicationController
 
     respond_to do |format|
       if @activity.save
-        format.html { redirect_to @activity, notice: "Activity was successfully created." }
+        format.html { redirect_to activities_path, notice: "Activity was successfully created." }
         format.json { render :show, status: :created, location: @activity }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -63,6 +67,11 @@ class ActivitiesController < ApplicationController
     end
   end
 
+  def correct_user
+    @activity = current_user.activities.find_by(id: params[:id])
+    redirect_to activities_path, notice: "ATTENZIONE! Non puoi editare qualcosa che non è tuo!" if @activity.nil?
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_activity
@@ -71,6 +80,6 @@ class ActivitiesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def activity_params
-      params.require(:activity).permit(:title, :body, :ispriv, :date, :time, :user_id, :category_id)
+      params.require(:activity).permit(:title, :body, :ispriv, :date, :time, :user_id, :category_id, :hashtag, :image)
     end
 end
